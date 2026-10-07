@@ -1,69 +1,78 @@
-# CodeIgniter 4 Application Starter
+# WMS Roastery: Multi-Branch Warehouse Management System ☕📦
 
-## What is CodeIgniter?
+An enterprise-grade Warehouse Management System (WMS) specifically tailored for the Specialty Coffee Industry, featuring production tracking, inter-branch logistics, and B2B/B2C order fulfillment.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 🤖 AI Collaboration Disclaimer:
+The business scenario, database architecture planning, and conceptual brainstorming for this project were developed with the analytical assistance of Google Gemini AI. However, all codebase implementation, programming logic, and system integration were solely written and executed by me.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## 📖 Project Overview
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Unlike standard CRUD inventory apps, this WMS is designed around a Hub-and-Spoke architecture (One Main Roastery Hub supplying multiple Retail Spokes). It tracks the physical transformation of raw materials (Green Beans) into finished goods (Roasted Beans) while managing complex logistics, including IN_TRANSIT states and Master-Detail order structures.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## ✨ Key Features & Technical Highlights
 
-## Installation & updates
+Production & Manufacturing Log:
+Tracks the coffee roasting process, automatically calculating the weight loss percentage when raw green beans are transformed into roasted batches.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+Hub & Spoke Inventory Routing (Inter-branch Transfers):
+Handles stock mutations between the Main Warehouse and Branch Stores using strict IN_TRANSIT states to prevent data loss during physical delivery.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+Master-Detail Order Fulfillment:
+Separates Order Headers (Customer info, Delivery status) from Order Items (Product details), supporting single-invoice multiple-item processing for both B2B and B2C channels.
 
-## Setup
+## Enterprise Data Integrity:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+Soft Deletes: Data is never permanently erased (deleted_at timestamps) to preserve historical sales data.
 
-## Important Change with index.php
+Blameable Traits: Tracks user accountability (created_by, updated_by, deleted_by) for every major transaction.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Centralized Audit Trail: Logs old_values and new_values in JSON format to track who changed what and when.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+Automated Document Generation:
+Dynamically generates printable PDF Delivery Orders (Surat Jalan) for internal couriers and B2B clients.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## 🗄️ Database Architecture (Entity Recap)
 
-## Repository Management
+The system relies on a highly normalized relational database, separating Master Data from Transactional Logs.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+1. **Master Data**
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+    - **products**: The master catalog (SKU, Name, Type, Base Price, Min Stock Alert).
 
-## Server Requirements
+    - **locations**: Physical storage points identified as either Hub (Main) or Spoke (Branch).
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+2. **Inventory & Production**
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+    - **roasting_batches**: Records the manufacturing process (Green Bean input → Roasted Bean output).
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+    - **inventory_levels**: A read-only pivot table representing the actual stock of a specific product at a specific location.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+3. Fulfillment & Logistics (Master-Detail)
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+    - **orders & order_items**: Manages external outbounds (B2B Wholesale & B2C E-commerce).
+
+    - **transfers & transfer_items**: Manages internal outbounds (Moving stock from Hub to Spoke).
+
+    - **returns**: Logs defective or returned items linked to specific historical Order IDs.
+
+## 🛠️ Tech Stack
+
+- **Backend Framework**: CodeIgniter 4 (PHP)
+
+- **Database**: MySQL (Utilizing Relational Constraints, Foreign Keys, and Stored Procedures)
+
+- **Frontend UI**: Bootstrap 4/5 (via AdminLTE / Stisla template)
+
+- **Interactivity**: Vanilla JavaScript / jQuery (for dynamic Master-Detail form rows and AJAX dropdowns)
+
+## 🔒 Security Measures Implemented
+
+- **Environment Variables**: Sensitive data (Database credentials, API Keys) are strictly isolated in a .env file and excluded from version control via .gitignore.
+
+- **CSRF Protection**: Cross-Site Request Forgery protection is enabled globally for all form submissions.
+
+- **Mass Assignment Protection**: CI4 Models are configured with $allowedFields to prevent HTTP parameter pollution.
+
+## 🚀 Installation & Setup
+
+*(Instructions to be added once development begins)*
