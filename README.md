@@ -59,9 +59,9 @@ The system relies on a highly normalized relational database, separating Master 
 
 - **Backend Framework**: CodeIgniter 4 (PHP)
 
-- **Database**: MySQL (Utilizing Relational Constraints, Foreign Keys, and Stored Procedures)
+- **Database**: XAMPP MySQL (Utilizing Relational Constraints, Foreign Keys, and Stored Procedures)
 
-- **Frontend UI**: Bootstrap 4/5 (via AdminLTE / Stisla template)
+- **Frontend UI**: Bootstrap 5 (via SB Admin 2 template)
 
 - **Interactivity**: Vanilla JavaScript / jQuery (for dynamic Master-Detail form rows and AJAX dropdowns)
 
