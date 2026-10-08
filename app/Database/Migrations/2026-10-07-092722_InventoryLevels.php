@@ -13,10 +13,27 @@ class InventoryLevels extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'location_id'   => [ // Tabel Locations
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'products_id'   => [  // Tabel Products
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'batch_code'    => [
+                'type'      => 'VARCHAR',
+                'constrait' => '50',
+            ],
+            'qty'    => [
+                'type'      => 'DECIMAL',
+                'constrait' => '10,2',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +43,18 @@ class InventoryLevels extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +64,8 @@ class InventoryLevels extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('inventory_levels');
+        $this->db->enableForeignKeyChecks();
     }
 }

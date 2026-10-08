@@ -13,8 +13,9 @@ class Locations extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'auto_increment'    => TRUE,
             ],
+
             'code'  => [
                 'type'      => 'VARCHAR',
                 'constrait' => '50',
@@ -27,6 +28,7 @@ class Locations extends Migration
                 'type'      => 'ENUM',
                 'constrait' => '"Hub", "Spoke"', //Hub = Main Building, Spoke = Branch Building
             ],
+
             'created_at'   =>[
                 'type'  => 'DATETIME',
             ],
@@ -35,18 +37,18 @@ class Locations extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -56,6 +58,8 @@ class Locations extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('locations');
+        $this->db->enableForeignKeyChecks();
     }
 }

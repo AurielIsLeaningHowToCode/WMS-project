@@ -13,10 +13,26 @@ class Returns extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'order_id'              => [    //Table
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'product_id'            => [
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'qty_returned'          => [
+                'type'      => 'DECIMAL',
+                'constrait' => '10,2',
+            ],
+            'customer_complaint'    => [
+                'type'  => 'TEXT',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +42,18 @@ class Returns extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +63,8 @@ class Returns extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('returns');
+        $this->db->enableForeignKeyChecks();
     }
 }

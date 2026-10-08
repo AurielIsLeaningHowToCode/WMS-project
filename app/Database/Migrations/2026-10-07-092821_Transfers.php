@@ -13,10 +13,27 @@ class Transfers extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'transfer_number'   => [
+                'type'      => 'DECIMAL',
+                'constrait' => '10,2',
+            ],
+            'from_location_id'  => [    //Tabel Locations
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'to_location_id'    => [    //Tabel Locations
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'status'            => [
+                'type'      => 'ENUM',
+                'constrait' => '"In Transit", "Completed"',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +43,18 @@ class Transfers extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +64,8 @@ class Transfers extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('transfers');
+        $this->db->enableForeignKeyChecks();
     }
 }

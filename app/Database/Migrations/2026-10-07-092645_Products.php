@@ -13,12 +13,14 @@ class Products extends Migration
         $this->forge->addField([
             'id'                =>[
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
+
             'sku'               =>[
                 'type'      => 'VARCHAR',
                 'constrait' => '50',
-                'null'      => 'false',
+                'null'      => FALSE,
             ],
             'name'              =>[
                 'type'      => 'VARCHAR',
@@ -39,6 +41,7 @@ class Products extends Migration
             'min_stock_alert'   =>[
                 'type'      => 'INT',
             ],
+
             'created_at'   =>[
                 'type'  => 'DATETIME',
             ],
@@ -47,18 +50,18 @@ class Products extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -68,6 +71,8 @@ class Products extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('products');
+        $this->db->enableForeignKeyChecks();
     }
 }

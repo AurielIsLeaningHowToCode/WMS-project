@@ -13,10 +13,38 @@ class Orders extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'order_number'  => [
+                'type'      => 'VARCHAR',
+                'constrait' => '50',
+            ],
+            'order_type'  => [
+                'type'      => 'ENUM',
+                'constrait' => '"B2B", "B2C"',
+            ],
+            'customer_name'  => [
+                'type'      => 'VARCHAR',
+                'constrait' => '150',
+            ],
+            'shipping_address'  => [
+                'type'  => 'TEXT',
+            ],
+            'shipping_provider'  => [
+                'type'      => 'VARCHAR',
+                'constrait' => '100',
+            ],
+            'shipping_receipt'  => [
+                'type'      => 'VARCHAR',
+                'constrait' => '100',
+            ],
+            'status'  => [
+                'type'      => 'ENUM',
+                'constrait' => '"Packed", "Shipped", "Completed"',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +54,18 @@ class Orders extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +75,8 @@ class Orders extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('orders');
+        $this->db->enableForeignKeyChecks();
     }
 }

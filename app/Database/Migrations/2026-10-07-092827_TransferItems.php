@@ -13,10 +13,22 @@ class TransferItems extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'transfer_id'   => [
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'products_id'   => [
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'qty'           => [
+                'type'      => 'INT',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +38,18 @@ class TransferItems extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +59,8 @@ class TransferItems extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('transfer_items');
+        $this->db->enableForeignKeyChecks();
     }
 }

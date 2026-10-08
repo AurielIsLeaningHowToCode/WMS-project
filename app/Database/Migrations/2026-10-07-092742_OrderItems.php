@@ -13,11 +13,28 @@ class OrderItems extends Migration
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
-
+            'order_id'  => [ // Tabel Orders
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'product_id'  => [
+                'type'      => 'INT',
+                'unsigned'  => TRUE,
+            ],
+            'qty'  => [
+                'type'      => 'DECIMAL',
+                'constrait' => '10,2',
+            ],
+            'price_at_sale'  => [
+                'type'      => 'DECIMAL',
+                'constrait' => '10,2',
+            ],
+            
             'created_at'   =>[
                 'type'  => 'DATETIME',
             ],
@@ -26,18 +43,18 @@ class OrderItems extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 
@@ -47,6 +64,8 @@ class OrderItems extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('order_items');
+        $this->db->enableForeignKeyChecks();
     }
 }
