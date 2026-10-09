@@ -8,7 +8,7 @@ class Returns extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -18,17 +18,17 @@ class Returns extends Migration
             ],
             
             // your main fields
-            'order_id'              => [    //Table
+            'order_id'              => [    //Tabel Order
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
-            'product_id'            => [
+            'product_id'            => [    // Tabel Produk
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
             'qty_returned'          => [
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
             'customer_complaint'    => [
                 'type'  => 'TEXT',
@@ -58,6 +58,8 @@ class Returns extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('order_id', 'orders', 'id', 'CASCADE', 'CASCADE', 'RFK_orders_id');
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE', 'RFK_products_id');
         $this->forge->createTable('returns');
     }
 

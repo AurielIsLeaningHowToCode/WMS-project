@@ -8,7 +8,7 @@ class InventoryLevels extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -22,17 +22,17 @@ class InventoryLevels extends Migration
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
-            'products_id'   => [  // Tabel Products
+            'product_id'   => [  // Tabel Products
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
             'batch_code'    => [
                 'type'      => 'VARCHAR',
-                'constrait' => '50',
+                'constraint' => '50',
             ],
             'qty'    => [
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
 
             'created_at'   =>[
@@ -59,6 +59,8 @@ class InventoryLevels extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('location_id', 'locations', 'id', 'CASCADE', 'CASCADE', 'ILFK_locations_id'); //Foreign Key
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE', 'ILFK_products_id'); //Foreign Key
         $this->forge->createTable('inventory_levels');
     }
 

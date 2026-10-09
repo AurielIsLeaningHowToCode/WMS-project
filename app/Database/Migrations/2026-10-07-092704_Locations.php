@@ -8,25 +8,26 @@ class Locations extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
+                'unsigned'          => TRUE,
                 'auto_increment'    => TRUE,
             ],
 
             'code'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '50',
+                'constraint' => '50',
             ],
             'name'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '100',
+                'constraint' => '100',
             ],
             'loc_type'  => [
                 'type'      => 'ENUM',
-                'constrait' => '"Hub", "Spoke"', //Hub = Main Building, Spoke = Branch Building
+                'constraint' => ["Hub", "Spoke"], //Hub = Main Building, Spoke = Branch Building
             ],
 
             'created_at'   =>[

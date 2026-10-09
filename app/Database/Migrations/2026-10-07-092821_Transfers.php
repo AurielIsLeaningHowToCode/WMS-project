@@ -8,7 +8,7 @@ class Transfers extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -20,7 +20,7 @@ class Transfers extends Migration
             // your main fields
             'transfer_number'   => [
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
             'from_location_id'  => [    //Tabel Locations
                 'type'      => 'INT',
@@ -32,7 +32,7 @@ class Transfers extends Migration
             ],
             'status'            => [
                 'type'      => 'ENUM',
-                'constrait' => '"In Transit", "Completed"',
+                'constraint' => ["In Transit", "Completed"],
             ],
 
             'created_at'   =>[
@@ -59,6 +59,8 @@ class Transfers extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('from_location_id', 'locations', 'id', 'CASCADE', 'CASCADE', 'TFK_from_locations');
+        $this->forge->addForeignKey('to_location_id', 'locations', 'id', 'CASCADE', 'CASCADE', 'TFK_to_locations');
         $this->forge->createTable('transfers');
     }
 

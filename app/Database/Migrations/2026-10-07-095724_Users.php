@@ -8,15 +8,36 @@ class Users extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
                 'type'              => 'INT',
-                'auto_increment'    => 'true',
+                'unsigned'          => TRUE,
+                'auto_increment'    => TRUE,
             ],
             
             // your main fields
+            'name'          => [
+                'type'     => 'INT',
+                'unsigned' => TRUE,
+            ],
+            'email'         => [
+                'type'      => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'password_hash' => [
+                'type'      => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'role'          => [
+                'type'      => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'is_active'     => [
+                'type'      => 'TINYINT',
+                'constraint' => '1',
+            ],
 
             'created_at'   =>[
                 'type'  => 'DATETIME',
@@ -26,18 +47,18 @@ class Users extends Migration
             ],
             'deleted_at'   =>[
                 'type'  =>  'DATETIME',
-                'null'  => 'true'
+                'null'  => TRUE
             ],
             'created_by'   =>[
                 'type'  => 'INT',
             ],
             'updated_by'   =>[
                 'type'  => 'INT',
-                'null'  => 'true',
+                'null'  => TRUE,
             ],
             'deleted_by'   =>[
                 'type'  => 'INT',
-                'null' => 'true',
+                'null' => TRUE,
             ],
         ]);
 

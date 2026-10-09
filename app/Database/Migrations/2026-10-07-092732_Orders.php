@@ -8,7 +8,7 @@ class Orders extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -20,30 +20,30 @@ class Orders extends Migration
             // your main fields
             'order_number'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '50',
+                'constraint' => '50',
             ],
             'order_type'  => [
                 'type'      => 'ENUM',
-                'constrait' => '"B2B", "B2C"',
+                'constraint' => '"B2B", "B2C"',
             ],
             'customer_name'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '150',
+                'constraint' => '150',
             ],
             'shipping_address'  => [
                 'type'  => 'TEXT',
             ],
             'shipping_provider'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '100',
+                'constraint' => '100',
             ],
             'shipping_receipt'  => [
                 'type'      => 'VARCHAR',
-                'constrait' => '100',
+                'constraint' => '100',
             ],
             'status'  => [
                 'type'      => 'ENUM',
-                'constrait' => '"Packed", "Shipped", "Completed"',
+                'constraint' => ["Packed", "Shipped", "Completed"],
             ],
 
             'created_at'   =>[

@@ -8,7 +8,7 @@ class RoastingBatches extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -20,7 +20,7 @@ class RoastingBatches extends Migration
             // your main fields
             'batch_code'    => [
                 'type'      => 'VARCHAR',
-                'constrait' => '50',
+                'constraint' => '50',
             ],
             'green_bean_id' => [ // Tabel Products
                 'type'      => 'INT',
@@ -28,11 +28,11 @@ class RoastingBatches extends Migration
             ],
             'raw_weight_kg' => [
                 'type'      => 'DECIMAL',
-                'constrait' => '8,2',
+                'constraint' => '8,2',
             ],
             'roasted_weight_kg' => [
                 'type'      => 'DECIMAL',
-                'constrait' => '8,2',
+                'constraint' => '8,2',
             ],
             'roast_date'    => [
                 'type'  => 'DATETIME',
@@ -63,6 +63,7 @@ class RoastingBatches extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('green_bean_id', 'products', 'id', 'CASCADE', 'CASCADE', 'RBFK_products_id'); //Foreign Key
         $this->forge->createTable('roasting_batches');
     }
 

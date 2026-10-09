@@ -8,7 +8,7 @@ class Products extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'                =>[
@@ -19,24 +19,24 @@ class Products extends Migration
 
             'sku'               =>[
                 'type'      => 'VARCHAR',
-                'constrait' => '50',
+                'constraint' => '50',
                 'null'      => FALSE,
             ],
             'name'              =>[
                 'type'      => 'VARCHAR',
-                'constrait' => '150',
+                'constraint' => '150',
             ],
             'type'              =>[
                 'type'      => 'ENUM',
-                'constrait' => '"GreenBean", "RoastedBean", "Equipment"',
+                'constraint' => ["GreenBean", "RoastedBean", "Equipment"],
             ],
             'unit_measure'      =>[
                 'type'      => 'VARCHAR',
-                'constrait' => '20',
+                'constraint' => '20',
             ],
             'base_price'        =>[
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
             'min_stock_alert'   =>[
                 'type'      => 'INT',

@@ -8,7 +8,7 @@ class OrderItems extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -22,17 +22,17 @@ class OrderItems extends Migration
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
-            'product_id'  => [
+            'product_id'  => [ // Tabel Products
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
             'qty'  => [
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
             'price_at_sale'  => [
                 'type'      => 'DECIMAL',
-                'constrait' => '10,2',
+                'constraint' => '10,2',
             ],
             
             'created_at'   =>[
@@ -59,6 +59,8 @@ class OrderItems extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE', 'OIFK_products_id'); //Foreign Key
+        $this->forge->addForeignKey('order_id', 'orders', 'id', 'CASCADE', 'CASCADE', 'OIFK_order_id'); //Foreign Key
         $this->forge->createTable('order_items');
     }
 

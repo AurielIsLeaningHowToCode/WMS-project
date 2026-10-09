@@ -8,7 +8,7 @@ class TransferItems extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('wms_roastery', true);
+        // $this->forge->createDatabase('wms_roastery', true);
 
         $this->forge->addField([
             'id'    => [
@@ -18,11 +18,11 @@ class TransferItems extends Migration
             ],
             
             // your main fields
-            'transfer_id'   => [
+            'transfer_id'   => [  //table transfers
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
-            'products_id'   => [
+            'product_id'   => [ //table products
                 'type'      => 'INT',
                 'unsigned'  => TRUE,
             ],
@@ -54,6 +54,8 @@ class TransferItems extends Migration
         ]);
 
         $this->forge->addKey('id', TRUE);
+        $this->forge->addForeignKey('transfer_id', 'transfers', 'id', 'CASCADE', 'CASCADE', 'TIFK_transfer_id');
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE', 'TIFK_products_id');
         $this->forge->createTable('transfer_items');
     }
 
