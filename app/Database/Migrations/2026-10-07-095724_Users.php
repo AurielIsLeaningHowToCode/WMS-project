@@ -20,7 +20,6 @@ class Users extends Migration
             // your main fields
             'name'          => [
                 'type'     => 'INT',
-                'unsigned' => TRUE,
             ],
             'email'         => [
                 'type'      => 'VARCHAR',
@@ -68,6 +67,8 @@ class Users extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropTable('users');
+        $this->db->enableForeignKeyChecks();
     }
 }
